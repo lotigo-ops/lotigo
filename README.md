@@ -7,6 +7,7 @@ et des prix estimes pour chaque objet. Electron, React et TypeScript.
 ## Utilisateur
 
 Projet public : [lotigo-ops/lotigo](https://github.com/lotigo-ops/lotigo).
+Site : [Lotigo](https://lotigo-ops.github.io/lotigo/).
 Les versions Windows sont disponibles dans [Releases](https://github.com/lotigo-ops/lotigo/releases).
 La version 0.2.0 est une version d'essai, non signee : Windows peut afficher
 un avertissement d'editeur inconnu. Un test sur un second PC reste a effectuer.

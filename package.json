@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
     "build": "npm run typecheck && electron-vite build",
     "preview": "electron-vite preview",
-    "dist": "npm run build && electron-builder --win nsis --x64",
+    "dist": "npm run build && electron-builder --win nsis --x64 --publish never",
     "test": "node scripts/test.mjs",
     "test:ui": "npm run build && node scripts/ui-smoke.mjs",
     "source:zip": "node scripts/package-source.mjs",

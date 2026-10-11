@@ -9,7 +9,8 @@ async function readLocalHashes() {
   catch (error) { if (error.code === "ENOENT") return null; throw error; }
 }
 const localHashes = await readLocalHashes();
-const { version } = JSON.parse(await readFile("package.json", "utf8"));
+const { version, scripts } = JSON.parse(await readFile("package.json", "utf8"));
+assert.ok(scripts.dist.endsWith("--publish never"), "Installer builds must not publish implicitly");
 await assert.rejects(() => prepareGitHubSite("wrong owner/project"));
 const { destination, releaseUrl } = await prepareGitHubSite("lotigo-ops/lotigo");
 assert.equal(releaseUrl, `https://github.com/lotigo-ops/lotigo/releases/download/v${version}`);

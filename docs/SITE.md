@@ -2,8 +2,10 @@
 
 Le site reste local dans website/index.html : ouverture directe dans un
 navigateur, aucun serveur et aucune installation supplementaire necessaires.
-Il n'est pas publie sur Internet et son adresse locale ne peut pas etre
-partagee sur un reseau social.
+Le site est aussi publie avec GitHub Pages : https://lotigo-ops.github.io/lotigo/.
+C'est cette adresse publique qui peut etre partagee sur un reseau social,
+pas l'adresse locale du fichier. Les installateurs sont heberges dans
+les releases de https://github.com/lotigo-ops/lotigo.
 
 ## Changements
 
@@ -56,6 +58,8 @@ node scripts/check-site.mjs
 npm.cmd run source:zip
 node scripts/check-source.mjs
 npm.cmd run site:prepare
+npm.cmd run site:github -- lotigo-ops/lotigo
+node scripts/check-github-site.mjs
 ```
 
 Les tests ouvrent le fichier local dans Edge avec Playwright et verifient

@@ -35,7 +35,7 @@ de fonctionnement. Aucune cle partagee ni photo personnelle ne doit etre ajoutee
 
 ## Mise en ligne
 
-Publication prevue dans `lotigo-ops/lotigo`, avec GitHub Pages pour le site
+Depot public `lotigo-ops/lotigo`, avec GitHub Pages pour le site
 et GitHub Releases pour les fichiers Windows. Pour une diffusion publique :
 
 1. Creer un depot public et y ajouter les sources MIT, sans `.env` ni donnees.
@@ -46,6 +46,8 @@ et GitHub Releases pour les fichiers Windows. Pour une diffusion publique :
 
 Le fichier `.github/workflows/windows.yml` verifie le code et produit un
 installateur sur Windows. Il ne publie aucune release automatiquement.
+La commande dist utilise explicitement `--publish never` pour desactiver
+la publication implicite d'electron-builder en CI. Aucun GH_TOKEN n'est requis.
 
 ### Site GitHub Pages
 
@@ -64,8 +66,9 @@ publics ciblent la release `v0.2.0` et les assets `lotigo-setup.exe`,
 `lotigo-source.zip` et `SHA256SUMS.txt` : deposer ces trois fichiers ensemble
 avant de diffuser le lien. Les releases d'essai utilisent un lien de version
 explicite, car elles ne sont pas selectionnees par le raccourci latest.
-L'adresse attendue est `https://lotigo-ops.github.io/lotigo/` ; verifier le
-succes du deploiement avant de la presenter comme une adresse active.
+Le site est publie a `https://lotigo-ops.github.io/lotigo/`. Le premier
+deploiement a ete verifie avec succes dans GitHub Actions le 11 octobre 2026.
+Verifier chaque nouveau deploiement avant de partager son lien.
 
 ## Signature de code
 

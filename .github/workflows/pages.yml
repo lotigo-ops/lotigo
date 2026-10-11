@@ -25,6 +25,7 @@ jobs:
       - uses: actions/configure-pages@v5
       - run: node --check website/app.js
       - run: node scripts/check-site-state.mjs
+      - run: node scripts/check-github-site.mjs
       - run: node scripts/prepare-github-site.mjs
       - uses: actions/upload-pages-artifact@v4
         with:
