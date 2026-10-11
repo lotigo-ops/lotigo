@@ -1,0 +1,92 @@
+{
+  "name": "leboncoin-photo-assistant",
+  "version": "0.2.0",
+  "description": "Lotigo : assistant Windows pour preparer des annonces Leboncoin par lot, avec titres, descriptions et prix estimes.",
+  "main": "out/main/index.js",
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
+    "build": "npm run typecheck && electron-vite build",
+    "preview": "electron-vite preview",
+    "dist": "npm run build && electron-builder --win nsis --x64",
+    "test": "node scripts/test.mjs",
+    "test:ui": "npm run build && node scripts/ui-smoke.mjs",
+    "source:zip": "node scripts/package-source.mjs",
+    "site:prepare": "node scripts/prepare-site.mjs",
+    "site:github": "node scripts/prepare-github-site.mjs"
+  },
+  "dependencies": {
+    "@electron-toolkit/preload": "^3.0.2",
+    "@electron-toolkit/utils": "^3.0.0",
+    "dotenv": "^16.4.7",
+    "exceljs": "^4.4.0",
+    "lucide-react": "^0.468.0",
+    "openai": "^6.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@electron-toolkit/tsconfig": "^1.0.1",
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^5.2.0",
+    "electron": "44.7.0",
+    "electron-builder": "26.15.3",
+    "electron-vite": "^5.0.0",
+    "jszip": "^3.10.1",
+    "playwright": "^1.62.1",
+    "typescript": "^5.7.2",
+    "vite": "^7.3.7"
+  },
+  "build": {
+    "appId": "fr.local.leboncoin-photo-assistant",
+    "productName": "Lotigo",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "out/**/*",
+      "package.json",
+      "!**/.env*",
+      "!**/listing-history*",
+      "!**/settings.json"
+    ],
+    "asar": true,
+    "npmRebuild": false,
+    "artifactName": "Lotigo-${version}-Setup.${ext}",
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Lotigo",
+      "installerLanguages": [
+        "fr_FR"
+      ],
+      "language": "1036",
+      "license": "LICENSE",
+      "include": "build/installer.nsh",
+      "deleteAppDataOnUninstall": false
+    }
+  },
+  "allowScripts": {
+    "electron@44.7.0": true,
+    "electron-winstaller@5.4.0": true,
+    "esbuild@0.25.12": true,
+    "esbuild@0.28.2": true
+  },
+  "overrides": {
+    "exceljs": {
+      "uuid": "11.1.1"
+    }
+  }
+}

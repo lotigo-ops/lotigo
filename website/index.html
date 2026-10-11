@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lotigo prépare vos annonces Leboncoin en batch : titres, descriptions et prix estimés par objet. Une série de livres à vendre ? Préparez en lot, puis publiez manuellement. Logiciel gratuit, API OpenAI payante.">
+  <meta name="theme-color" content="#f7f9f8">
+  <title>Lotigo | Votre assistant d'annonces par lot pour Leboncoin</title>
+  <link rel="icon" href="assets/icons/layers.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#" aria-label="Lotigo, accueil">
+        <img src="assets/icons/layers.svg" width="30" height="30" alt="">
+        <span>Lotigo<span class="brand-sub">Annonces par lot</span></span>
+      </a>
+      <button class="icon-button menu-toggle" id="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-controls="navigation" aria-expanded="false" title="Ouvrir le menu"><img src="assets/icons/menu.svg" alt=""></button>
+      <nav id="navigation" aria-label="Navigation principale">
+        <a href="#demo">Explorer le batch</a>
+        <a href="#application">L'application</a>
+        <a href="#questions">Questions</a>
+        <a class="button button-small button-dark" href="#telecharger">Télécharger <img class="icon" src="assets/icons/download-white.svg" alt=""></a>
+      </nav>
+    </div>
+  </header>
+  <main id="contenu">
+    <section class="hero" aria-labelledby="hero-title">
+      <img class="hero-image" src="assets/objets-hero-v3.webp" alt="Une lampe verte, un appareil photo et une chaise rouge prêts pour une seconde vie." width="1862" height="845" fetchpriority="high">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="version-mark">v0.2.0</span> GRATUIT &amp; OPEN SOURCE</p>
+          <h1 id="hero-title">Lotigo<span class="title-dot">.</span></h1>
+          <p class="hero-lead">Préparez en batch.<br>Publiez plus vite sur Leboncoin.</p>
+          <p class="hero-description">Déposez vos photos : un titre, une description et un prix estimé par objet. Relisez, puis copiez vos annonces pour les publier vous-même.</p>
+          <div class="hero-actions">
+            <a class="button button-green" href="downloads/lotigo-setup.exe" download>Obtenir Lotigo <img class="icon" src="assets/icons/download-white.svg" alt=""></a>
+            <a class="text-link" href="#demo">Voir un lot d'exemple <img class="icon" src="assets/icons/arrow.svg" alt=""></a>
+          </div>
+          <p class="hero-note">Windows 64 bits · Votre clé OpenAI · API payante<br>Démonstration gratuite sans clé.</p>
+        </div>
+      </div>
+      <span class="hero-caption">Objets d'illustration</span>
+    </section>
+
+    <div class="trust-band">
+      <div class="container trust-inner">
+        <span><img class="icon" src="assets/icons/layers.svg" alt=""> Une photo, une annonce</span>
+        <span><img class="icon" src="assets/icons/sparkle.svg" alt=""> Titres et estimations par objet</span>
+        <span><img class="icon" src="assets/icons/shield.svg" alt=""> Vous publiez, vous décidez</span>
+      </div>
+    </div>
+
+    <section id="demo" class="section container" aria-labelledby="demo-heading">
+      <div class="section-heading reveal">
+        <div><p class="eyebrow">LE BATCH, CONCRÈTEMENT</p><h2 id="demo-heading">Un lot de photos.<br>Des annonces préparées.</h2></div>
+        <p>Trois objets, trois titres et trois prix estimés. Modifiez les exemples puis exportez le lot. Ici, les résultats sont fictifs : aucun appel à OpenAI.</p>
+      </div>
+      <div class="demo-topline">
+        <div class="segmented" role="tablist" aria-label="Vue de la démonstration">
+          <button type="button" id="tab-batch" role="tab" aria-selected="true" aria-controls="demo-batch" tabindex="0"><img class="icon" src="assets/icons/layers.svg" alt="">Un lot de 3 objets</button>
+          <button type="button" id="tab-single" role="tab" aria-selected="false" aria-controls="demo-single" tabindex="-1"><img class="icon" src="assets/icons/image.svg" alt="">Une annonce</button>
+        </div>
+        <span class="demo-indicator">Aperçu interactif · résultats fictifs</span>
+      </div>
+      <div id="demo-single" role="tabpanel" aria-labelledby="tab-single" class="demo-single" hidden>
+        <div class="demo-gallery">
+          <div class="sample-photo"><img id="sample-image" src="assets/lampe-demo-v2.webp" alt="Lampe de bureau verte d'illustration." width="1024" height="1024"><span class="photo-label">PHOTO D'EXEMPLE</span></div>
+          <div class="sample-picker" aria-label="Objets d'exemple">
+            <button type="button" data-sample="lamp" aria-pressed="true"><img src="assets/lampe-demo-v2.webp" alt="" width="64" height="64"><span>Lampe de bureau</span></button>
+            <button type="button" data-sample="camera" aria-pressed="false"><img src="assets/appareil-demo-v2.webp" alt="" width="64" height="64"><span>Appareil photo</span></button>
+            <button type="button" data-sample="chair" aria-pressed="false"><img src="assets/chaise-demo-v2.webp" alt="" width="64" height="64"><span>Chaise rouge</span></button>
+          </div>
+        </div>
+        <form class="demo-editor" id="demo-form">
+          <div class="editor-heading"><h3>Votre annonce</h3><span class="ready-label"><img class="icon" src="assets/icons/check.svg" alt="">Exemple préparé</span></div>
+          <label for="listing-title">Titre</label>
+          <div class="copy-field"><input id="listing-title" type="text" maxlength="200" value="Lampe de bureau articulée verte"><button class="icon-button" type="button" data-copy="title" aria-label="Copier le titre" title="Copier le titre"><img src="assets/icons/copy.svg" alt=""></button></div>
+          <label for="listing-description">Description</label>
+          <div class="copy-field textarea-field"><textarea id="listing-description" rows="5" maxlength="6000">Lampe de bureau en métal vert avec bras articulé. Quelques traces d'usage sur la base. Dimensions et fonctionnement à confirmer avant la vente.</textarea><button class="icon-button" type="button" data-copy="description" aria-label="Copier la description" title="Copier la description"><img src="assets/icons/copy.svg" alt=""></button></div>
+          <div class="editor-meta">
+            <div><label for="listing-price">Prix d'exemple</label><div class="price-field"><input id="listing-price" type="number" min="0" max="1000000" step="0.5" value="25"><span>€</span></div></div>
+            <div><label for="listing-condition">État</label><select id="listing-condition"><option>Bon état, à vérifier</option><option>Très bon état, à vérifier</option><option>État correct, à vérifier</option></select></div>
+          </div>
+          <p class="verification-note"><img class="icon" src="assets/icons/sparkle.svg" alt="">Une estimation reste une estimation. Vérifiez toujours le modèle, l'état et le prix.</p>
+          <div class="editor-actions"><button type="button" class="button button-green" id="copy-listing"><img class="icon" src="assets/icons/copy-white.svg" alt="">Copier l'annonce d'exemple</button><button type="button" class="text-link" id="reset-example" title="Rétablir cet exemple">Rétablir</button></div>
+        </form>
+      </div>
+      <div id="demo-batch" role="tabpanel" aria-labelledby="tab-batch" class="demo-batch">
+        <div class="batch-heading"><p><strong>3 photos. 3 titres. 3 estimations de prix.</strong><br>Exemples fictifs ; aucun envoi de photo.</p><button type="button" class="button button-outline" id="export-demo"><img class="icon" src="assets/icons/export.svg" alt="">Exporter cet exemple CSV</button></div>
+        <div class="batch-rows" id="batch-rows"></div>
+        <p class="muted small">Dans l'application, les photos sont analysées une par une. Les exports HTML, CSV et Excel reprennent vos modifications.</p>
+      </div>
+      <noscript><p>Les exemples interactifs nécessitent JavaScript. L'application Windows et les téléchargements restent accessibles.</p></noscript>
+    </section>
+
+    <section class="benefits section" aria-labelledby="benefits-heading">
+      <div class="container">
+        <p class="eyebrow reveal">L'ESSENTIEL, AU MÊME ENDROIT</p>
+        <h2 id="benefits-heading" class="reveal">Tout préparer, par lot.</h2>
+        <div class="benefit-grid">
+          <article class="reveal"><img class="feature-icon" src="assets/icons/layers.svg" alt=""><span class="feature-number">01</span><h3>Une série de livres à vendre ?</h3><p>Une photo par livre, une annonce par photo. Lancez tout le lot en une fois : les images sont analysées l'une après l'autre. Cela marche aussi pour vos autres objets.</p></article>
+          <article class="reveal"><img class="feature-icon" src="assets/icons/sparkle.svg" alt=""><span class="feature-number">02</span><h3>Titres et prix, objet par objet</h3><p>Pour chaque photo : un titre, une description, une fourchette de prix et un prix recommandé. Tout reste modifiable et à vérifier.</p></article>
+          <article class="reveal"><img class="feature-icon" src="assets/icons/export.svg" alt=""><span class="feature-number">03</span><h3>Moins de saisie sur Leboncoin</h3><p>Relisez, puis copiez les titres, descriptions et prix pour publier manuellement. Ou exportez le lot en HTML, CSV ou Excel pour retrouver vos annonces préparées.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="application" class="section container" aria-labelledby="app-heading">
+      <div class="section-heading reveal"><div><p class="eyebrow">LA VRAIE APPLICATION WINDOWS</p><h2 id="app-heading">Un espace clair.<br>Pas dix onglets ouverts.</h2></div><p>Le travail reste sur votre ordinateur. Une annonce, un lot ou l'historique : tout se retrouve dans la même fenêtre.</p></div>
+      <div class="screenshot-toolbar">
+        <div class="segmented" role="tablist" aria-label="Captures de l'application">
+          <button type="button" role="tab" aria-selected="true" aria-controls="screenshot-panel" data-screenshot="workspace" tabindex="0">Espace de travail</button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="screenshot-panel" data-screenshot="setup" tabindex="-1">Première ouverture</button>
+        </div>
+        <button class="icon-button" id="expand-screenshot" type="button" aria-label="Agrandir la capture" title="Agrandir la capture"><img src="assets/icons/expand.svg" alt=""></button>
+      </div>
+      <figure id="screenshot-panel" class="app-screenshot" role="tabpanel" aria-label="Capture de l'application">
+        <img id="app-screenshot" src="assets/workspace.png" alt="Capture réelle de l'éditeur d'annonce de l'application Windows." width="1180" height="780" loading="lazy">
+        <figcaption>Capture réelle · Lotigo v0.2.0</figcaption>
+      </figure>
+    </section>
+
+    <section id="connexion" class="connection section">
+      <div class="container connection-grid">
+        <div class="reveal"><p class="eyebrow">VOTRE COMPTE, VOTRE CHOIX</p><h2>On vous guide.<br>Dès la première ouverture.</h2><p>Pas besoin de modifier un fichier. Un assistant vous accompagne pour découvrir l'application ou connecter OpenAI.</p><button type="button" class="text-link" id="open-guide">Voir les étapes de connexion <img class="icon" src="assets/icons/arrow.svg" alt=""></button></div>
+        <ol class="connection-steps">
+          <li class="reveal"><span>1</span><div><h3>Commencez sans clé</h3><p>Le mode démonstration permet de tester l'interface et les exports, gratuitement.</p></div></li>
+          <li class="reveal"><span>2</span><div><h3>Connectez votre propre OpenAI</h3><p>Créez votre clé API et configurez la facturation. Un abonnement ChatGPT ne couvre pas les appels API.</p></div></li>
+          <li class="reveal"><span>3</span><div><h3>Gardez la main sur vos données</h3><p>Votre clé est chiffrée sur Windows. Seules les photos lancées en analyse en ligne sont envoyées à OpenAI.</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="questions" class="section container faq-grid">
+      <div class="reveal"><p class="eyebrow">BON À SAVOIR</p><h2>Les réponses,<br>sans les petites lignes.</h2><p class="muted">Un outil indépendant, transparent sur ce qu'il fait et ce qu'il ne fait pas.</p></div>
+      <div class="faq-list">
+        <details><summary>Est-ce vraiment gratuit ?<img class="icon" src="assets/icons/chevron.svg" alt=""></summary><p>Le logiciel et les sources sont gratuits sous licence MIT. L'utilisation de l'API OpenAI est payante selon votre consommation. La démonstration fonctionne sans clé et sans appel API.</p></details>
+        <details><summary>Est-ce que l'application publie à ma place ?<img class="icon" src="assets/icons/chevron.svg" alt=""></summary><p>Non. Vous préparez, relisez et publiez vous-même. Le logiciel ne se connecte pas à votre compte Leboncoin et n'automatise pas le navigateur.</p></details>
+        <details><summary>Et pour une série de livres ?<img class="icon" src="assets/icons/chevron.svg" alt=""></summary><p>Photographiez chaque livre séparément, puis déposez toutes les photos dans le mode Analyse par lot. Vous obtenez une annonce par photo, à modifier et à copier. Vérifiez le titre du livre, l'auteur, l'édition, l'état et les prix proposés avant de publier chaque annonce manuellement.</p></details>
+        <details><summary>Le prix proposé est-il fiable ?<img class="icon" src="assets/icons/chevron.svg" alt=""></summary><p>C'est une estimation, pas une cote vérifiée. Comparez avec des annonces similaires et vérifiez l'état, la marque et le modèle. Les résultats de l'aperçu de ce site sont entièrement fictifs.</p></details>
+        <details><summary>Mon abonnement ChatGPT suffit-il ?<img class="icon" src="assets/icons/chevron.svg" alt=""></summary><p>Non, l'application utilise une clé API OpenAI. La facturation API est distincte des abonnements ChatGPT Plus et Pro. L'assistant explique où créer votre clé et vérifier votre consommation.</p></details>
+        <details><summary>Que deviennent mes photos et mes annonces ?<img class="icon" src="assets/icons/chevron.svg" alt=""></summary><p>L'historique des photos et des annonces est stocké sur votre PC et peut être supprimé depuis l'application. Cet historique n'est pas chiffré. Les analyses en ligne sont soumises aux <a href="https://developers.openai.com/api/docs/guides/your-data" target="_blank" rel="noopener noreferrer">règles de traitement des données d'OpenAI</a>. Ce site n'utilise pas de suivi ni de compte.</p></details>
+        <details><summary>Pourquoi Windows peut-il afficher un avertissement ?<img class="icon" src="assets/icons/chevron.svg" alt=""></summary><p>Cette version d'essai n'est pas signée avec un certificat d'éditeur. Windows peut indiquer un éditeur inconnu. Les sources sont disponibles et les téléchargements disposent d'une empreinte SHA-256. Un test sur un autre PC reste à réaliser avant une diffusion large.</p></details>
+        <details><summary>Dois-je installer Node.js ?<img class="icon" src="assets/icons/chevron.svg" alt=""></summary><p>Non. L'installateur inclut les composants nécessaires. Node.js est seulement utile si vous souhaitez modifier le code ou compiler l'application vous-même.</p></details>
+      </div>
+    </section>
+
+    <section id="telecharger" class="download-section">
+      <div class="container download-inner">
+        <p class="eyebrow">UNE SECONDE VIE COMMENCE PAR UNE BONNE ANNONCE</p>
+        <h2>Des livres, des objets à vendre ?<br>Préparez les annonces en lot.</h2>
+        <p>Les titres, les descriptions et les prix estimés sont prêts à relire. À vous de publier sur Leboncoin, sans tout rédiger à chaque fois.</p>
+        <div class="download-actions"><a class="button button-light" href="downloads/lotigo-setup.exe" download><img class="icon" src="assets/icons/monitor.svg" alt="">Télécharger pour Windows <img class="icon" src="assets/icons/download.svg" alt=""></a><a class="button button-outline-light" href="downloads/lotigo-source.zip" download>Explorer les sources MIT <img class="icon" src="assets/icons/external-white.svg" alt=""></a></div>
+        <p class="download-note">Version 0.2.0 · Windows 64 bits · Installateur non signé<br>Logiciel gratuit. Analyses OpenAI payantes. Publication toujours manuelle.</p>
+      </div>
+    </section>
+  </main>
+  <footer class="container">
+    <a class="brand" href="#"><img src="assets/icons/layers.svg" width="28" height="28" alt=""><span>Lotigo<span class="brand-sub">Annonces par lot</span></span></a>
+    <p>Fait pour préparer, pas pour publier à votre place.<br>Projet indépendant de Leboncoin et d'OpenAI.</p>
+    <div class="footer-links"><a href="https://github.com/lotigo-ops/lotigo/issues" target="_blank" rel="noopener noreferrer">Aide et retours</a><a href="downloads/SHA256SUMS.txt">Empreintes SHA-256</a><a href="downloads/lotigo-source.zip" download>Sources MIT</a><button type="button" class="text-link" id="copy-project">Copier une présentation <img class="icon" src="assets/icons/copy.svg" alt=""></button></div>
+  </footer>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <dialog id="screenshot-dialog" class="screenshot-dialog"><button class="icon-button dialog-close" type="button" data-close-dialog aria-label="Fermer la capture" title="Fermer la capture"><img src="assets/icons/close.svg" alt=""></button><img id="large-screenshot" src="assets/workspace.png" alt="Capture agrandie de l'application." width="1180" height="780"></dialog>
+  <dialog id="guide-dialog" class="guide-dialog" aria-labelledby="guide-heading">
+    <button class="icon-button dialog-close" type="button" data-close-dialog aria-label="Fermer le guide" title="Fermer le guide"><img src="assets/icons/close.svg" alt=""></button>
+    <p class="eyebrow">VOTRE PREMIÈRE ANALYSE EN LIGNE</p><h2 id="guide-heading">Connecter OpenAI</h2>
+    <ol><li><strong>Installez puis ouvrez l'application.</strong><p>Choisissez « Analyser mes objets » à la première ouverture, ou ouvrez les réglages.</p></li><li><strong>Préparez votre compte OpenAI.</strong><p>Créez votre projet, configurez la facturation API et gardez un budget de test raisonnable.</p></li><li><strong>Créez votre clé personnelle.</strong><p>Saisissez-la uniquement dans l'application Windows. Ne la partagez pas et ne la publiez jamais.</p></li><li><strong>Testez la connexion et confirmez l'envoi des photos.</strong><p>Le test vérifie l'accès au modèle, pas vos crédits. Vous pouvez revenir à la démonstration à tout moment.</p></li></ol>
+    <a class="button button-green" href="https://developers.openai.com/api/docs/quickstart" target="_blank" rel="noopener noreferrer">Guide officiel OpenAI <img class="icon" src="assets/icons/external-white.svg" alt=""></a>
+  </dialog>
+</body>
+</html>
